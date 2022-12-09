@@ -3,6 +3,6 @@ export type UserInfoDataType = {
   CharacterName: string;
   CharacterLevel: number;
   CharacterClassName: string;
-  itemAvgLevel: string;
-  itemMaxLevel: string;
+  ItemAvgLevel: string;
+  ItemMaxLevel: string;
 };
