@@ -19,7 +19,8 @@
     "paths": {
       "@components/*": ["components/*"],
       "@typedef/*": ["typedef/*"],
-      "@libs/*": ["libs/*"]
+      "@libs/*": ["libs/*"],
+      "@routes/*": ["routs/*"]
     }
   },
   "include": ["src"]

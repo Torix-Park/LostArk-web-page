@@ -1,12 +1,10 @@
 import { BrowserRouter } from 'react-router-dom';
-import News from './News/News';
-import UserInfo from './UserInfo/UserInfo';
+import RouteNavigation from 'routes/RouteNavigation';
 
 const App = () => {
   return (
     <BrowserRouter>
-      <UserInfo />
-      <News />
+      <RouteNavigation />
     </BrowserRouter>
   );
 };
