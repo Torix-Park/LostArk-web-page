@@ -1,5 +1,8 @@
-import { requestSecureGet } from '../../libs/api';
-import { UserInfoDataType } from '@typedef/components/UserInfo/userinfo.types';
+import { requestSecureGet } from '@libs/api';
+import {
+  UserInfoDataType,
+  UserProfilesDataType,
+} from '@typedef/components/UserInfo/userinfo.types';
 import { useCallback, useState } from 'react';
 
 const UserInfo = () => {
@@ -7,13 +10,15 @@ const UserInfo = () => {
 
   const [userData, setUserData] = useState<UserInfoDataType[]>([]);
 
+  const [profilesData, setProfilesData] = useState<UserProfilesDataType>();
+
   const loadUserInfo = useCallback(async () => {
     const { config, data } = await requestSecureGet<UserInfoDataType[]>(
       `characters/${userName}/siblings`,
       {},
     );
 
-    if (config.status === 200) {
+    if (config.status === 200 && data) {
       setUserData(
         data.sort((a, b) =>
           Math.floor(Number(b.ItemMaxLevel.replace(',', ''))) >
@@ -22,6 +27,24 @@ const UserInfo = () => {
             : -1,
         ),
       );
+
+      loadUserProfiles();
+    } else {
+      setUserData([]);
+    }
+  }, [userName]);
+
+  const loadUserProfiles = useCallback(async () => {
+    const { config, data } = await requestSecureGet<UserProfilesDataType>(
+      `armories/characters/${userName}/profiles`,
+      {},
+    );
+
+    if (config.status === 200 && data) {
+      console.log(data);
+      setProfilesData(data);
+    } else {
+      //
     }
   }, [userName]);
   return (

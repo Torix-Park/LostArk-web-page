@@ -1,5 +1,5 @@
 import { BrowserRouter } from 'react-router-dom';
-import RouteNavigation from 'routes/RouteNavigation';
+import RouteNavigation from '@routes/RouteNavigation';
 
 const App = () => {
   return (
