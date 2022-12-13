@@ -1,5 +1,13 @@
-import { requestSecureGet } from '@libs/api';
+import { apiRoute, requestSecureGet } from '@libs/api';
 import {
+  UserAvatarsDataType,
+  UserCardsDataType,
+  UserCollectiblesDataType,
+  UserColosseumsDataType,
+  UserCombatSkillsDataType,
+  UserEngravingsDataType,
+  UserEquipmentDataType,
+  UserGemsDataType,
   UserInfoDataType,
   UserProfilesDataType,
 } from '@typedef/components/UserInfo/userinfo.types';
@@ -14,7 +22,7 @@ const UserInfo = () => {
 
   const loadUserInfo = useCallback(async () => {
     const { config, data } = await requestSecureGet<UserInfoDataType[]>(
-      `characters/${userName}/siblings`,
+      apiRoute.characters.default + userName + apiRoute.characters.siblings,
       {},
     );
 
@@ -36,7 +44,7 @@ const UserInfo = () => {
 
   const loadUserProfiles = useCallback(async () => {
     const { config, data } = await requestSecureGet<UserProfilesDataType>(
-      `armories/characters/${userName}/profiles`,
+      apiRoute.armories.default + userName + apiRoute.armories.profiles,
       {},
     );
 
@@ -47,6 +55,99 @@ const UserInfo = () => {
       //
     }
   }, [userName]);
+
+  const loadUserGems = useCallback(async () => {
+    const { config, data } = await requestSecureGet<UserGemsDataType>(
+      apiRoute.armories.default + userName + apiRoute.armories.gems,
+      {},
+    );
+
+    if (config.status === 200 && data) {
+      console.log(data);
+    } else {
+      //
+    }
+  }, [userName]);
+
+  const loadUserCollectibles = useCallback(async () => {
+    const { config, data } = await requestSecureGet<UserCollectiblesDataType>(
+      apiRoute.armories.default + userName + apiRoute.armories.collectibles,
+      {},
+    );
+
+    if (config.status === 200 && data) {
+      console.log(data);
+    } else {
+      //
+    }
+  }, [userName]);
+
+  const loadUserEquipment = useCallback(async () => {
+    const { config, data } = await requestSecureGet<UserEquipmentDataType[]>(
+      apiRoute.armories.default + userName + apiRoute.armories.equipment,
+      {},
+    );
+
+    if (config.status === 200 && data) {
+      console.log(data);
+    }
+  }, [userName]);
+
+  const loadUserAvatars = useCallback(async () => {
+    const { config, data } = await requestSecureGet<UserAvatarsDataType[]>(
+      apiRoute.armories.default + userName + apiRoute.armories.avatars,
+      {},
+    );
+
+    if (config.status === 200 && data) {
+      console.log(data);
+    }
+  }, [userName]);
+
+  const loadUserCombatSkills = useCallback(async () => {
+    const { config, data } = await requestSecureGet<UserCombatSkillsDataType[]>(
+      apiRoute.armories.default + userName + apiRoute.armories.combatskills,
+      {},
+    );
+
+    if (config.status === 200 && data) {
+      console.log(data);
+    }
+  }, [userName]);
+
+  const loadUserEngravings = useCallback(async () => {
+    const { config, data } = await requestSecureGet<UserEngravingsDataType>(
+      apiRoute.armories.default + userName + apiRoute.armories.engravings,
+      {},
+    );
+
+    if (config.status === 200 && data) {
+      console.log(data);
+    }
+  }, [userName]);
+
+  const loadUserCards = useCallback(async () => {
+    const { config, data } = await requestSecureGet<UserCardsDataType>(
+      apiRoute.armories.default + userName + apiRoute.armories.cards,
+      {},
+    );
+
+    if (config.status === 200 && data) {
+      console.log(data);
+    }
+  }, [userName]);
+
+  const loadUserColosseumns = useCallback(async () => {
+    const { config, data } = await requestSecureGet<UserColosseumsDataType>(
+      apiRoute.armories.default + userName + apiRoute.armories.colosseums,
+      {},
+    );
+
+    if (config.status === 200 && data) {
+      console.log(data);
+    }
+  }, [userName]);
+
   return (
     <>
       <div>
@@ -57,10 +158,27 @@ const UserInfo = () => {
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
               loadUserInfo();
+              loadUserGems();
+              loadUserCollectibles();
+              loadUserEquipment();
+              loadUserCombatSkills();
+              loadUserColosseumns();
+              loadUserCards();
+              loadUserEngravings();
             }
           }}
         />
-        <button onClick={loadUserInfo}>검색</button>
+        <button
+          onClick={() => {
+            loadUserInfo();
+            loadUserGems();
+            loadUserCollectibles();
+            loadUserEquipment();
+            loadUserAvatars();
+          }}
+        >
+          검색
+        </button>
 
         {userData.length > 0 && (
           <table>

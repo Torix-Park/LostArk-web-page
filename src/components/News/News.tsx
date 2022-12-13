@@ -1,5 +1,5 @@
 // import { requestSecureGet } from '@libs/api';
-import { requestSecureGet } from '../../libs/api';
+import { apiRoute, requestSecureGet } from '../../libs/api';
 import { NewsDataTypes } from '@typedef/components/News/news.types';
 import React, { useCallback, useEffect, useState } from 'react';
 
@@ -7,7 +7,7 @@ const News = () => {
   const [data, setData] = useState<NewsDataTypes[]>([]);
   const LoadNews = useCallback(async () => {
     const { config, data } = await requestSecureGet<NewsDataTypes[]>(
-      'news/events',
+      apiRoute.news.events,
       {},
     );
 

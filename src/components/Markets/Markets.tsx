@@ -1,7 +1,8 @@
-import { requestSecureGet } from '@libs/api';
+import { apiRoute, requestSecureGet, requestSecurePost } from '@libs/api';
 import {
   MarketItemDataType,
   MarketOptionDataType,
+  MarketSearchItemDataType,
 } from '@typedef/components/Markets/markets.types';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -10,7 +11,7 @@ const Markets = () => {
 
   const loadMarketOptions = useCallback(async () => {
     const { config, data } = await requestSecureGet<MarketOptionDataType>(
-      'markets/options',
+      apiRoute.markets.options,
       {},
     );
 
@@ -19,9 +20,10 @@ const Markets = () => {
     }
   }, []);
 
+  // 거래소
   const loadMarketItem = useCallback(async () => {
     const { config, data } = await requestSecureGet<MarketItemDataType[]>(
-      `/markets/items/${itemId}`,
+      apiRoute.markets.getItems + itemId,
       {},
     );
 
@@ -29,6 +31,19 @@ const Markets = () => {
       console.log(data);
     }
   }, [itemId]);
+
+  // 경매장
+  const searchMarketItem = useCallback(async () => {
+    const { config, data } = await requestSecurePost<MarketSearchItemDataType>(
+      apiRoute.markets.searchItems,
+      {},
+      {},
+    );
+
+    if (config.status === 200 && data) {
+      console.log(data);
+    }
+  }, []);
 
   useEffect(() => {
     loadMarketOptions();
