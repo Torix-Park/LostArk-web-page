@@ -1,36 +1,41 @@
-import { apiRoute, requestSecureGet, requestSecurePost } from '@libs/api';
+import { apiRoute, requestSecureGet, requestSecurePost } from "@libs/api";
+import { userTokenSelector } from "@stories/userToken";
 import {
   MarketItemDataType,
   MarketOptionDataType,
   MarketSearchItemDataType,
-} from '@typedef/components/Markets/markets.types';
-import { useCallback, useEffect, useState } from 'react';
+} from "@typedef/components/Markets/markets.types";
+import { useCallback, useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
 
 const Markets = () => {
-  const [itemId, setItemId] = useState<string>('');
+  const userToken = useRecoilValue(userTokenSelector);
+  const [itemId, setItemId] = useState<string>("");
 
   const loadMarketOptions = useCallback(async () => {
     const { config, data } = await requestSecureGet<MarketOptionDataType>(
       apiRoute.markets.options,
       {},
+      userToken
     );
 
     if (config.status === 200 && data) {
       console.log(data);
     }
-  }, []);
+  }, [userToken]);
 
   // 거래소
   const loadMarketItem = useCallback(async () => {
     const { config, data } = await requestSecureGet<MarketItemDataType[]>(
       apiRoute.markets.getItems + itemId,
       {},
+      userToken
     );
 
     if (config.status === 200 && data) {
       console.log(data);
     }
-  }, [itemId]);
+  }, [userToken, itemId]);
 
   // 경매장
   const searchMarketItem = useCallback(async () => {
@@ -38,12 +43,13 @@ const Markets = () => {
       apiRoute.markets.searchItems,
       {},
       {},
+      userToken
     );
 
     if (config.status === 200 && data) {
       console.log(data);
     }
-  }, []);
+  }, [userToken]);
 
   useEffect(() => {
     loadMarketOptions();

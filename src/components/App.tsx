@@ -1,10 +1,13 @@
-import { BrowserRouter } from 'react-router-dom';
-import RouteNavigation from '@routes/RouteNavigation';
+import { BrowserRouter } from "react-router-dom";
+import RouteNavigation from "@routes/RouteNavigation";
+import { RecoilRoot } from "recoil";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <RouteNavigation />
+      <RecoilRoot>
+        <RouteNavigation />
+      </RecoilRoot>
     </BrowserRouter>
   );
 };
